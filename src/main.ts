@@ -1,13 +1,14 @@
-import { createSSRApp } from "vue";
-import * as Pinia from 'pinia';
-import tmui from "./tmui"
-import App from "./App.vue";
+import './assets/main.css'
 
-export function createApp() {
-  const app = createSSRApp(App);
-  app.use(tmui, { shareDisable: false } as Tmui.tmuiConfig)
-  return {
-    app,
-    Pinia
-  };
-}
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
+import App from './App.vue'
+import router from './router'
+
+const app = createApp(App)
+
+app.use(createPinia())
+app.use(router)
+
+app.mount('#app')
