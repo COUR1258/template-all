@@ -9,6 +9,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
+      <t-button>确定</t-button>
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
