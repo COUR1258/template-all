@@ -1,26 +1,22 @@
 import { rmSync } from 'node:fs'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import electron from 'vite-plugin-electron'
 import renderer from 'vite-plugin-electron-renderer'
 import { notBundle } from 'vite-plugin-electron/plugin'
 import pkg from './package.json'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import * as path from "path";
 
 
 
-// https://vitejs.dev/config/
-export default defineConfig(({ command }) => {
+export default defineConfig(({ command ,mode}) => {
+  //删除构建目录,不删除的话HMR会有问题
   rmSync('dist-electron', { recursive: true, force: true })
-
-  const isServe = command === 'serve'
-  const isBuild = command === 'build'
-  const sourcemap = isServe || !!process.env.VSCODE_DEBUG
-
   return {
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
+        '@': path.join(__dirname,"src")
       }
     },
     plugins: [
@@ -39,8 +35,8 @@ export default defineConfig(({ command }) => {
           },
           vite: {
             build: {
-              sourcemap,
-              minify: isBuild,
+              sourcemap:command === 'serve',
+              minify: command === 'build',
               outDir: 'dist-electron/main',
               rollupOptions: {
                 // Some third-party Node.js libraries may not be built correctly by Vite, especially `C/C++` addons, 
@@ -53,7 +49,7 @@ export default defineConfig(({ command }) => {
             plugins: [
               // This is just an option to improve build performance, it's non-deterministic!
               // e.g. `import log from 'electron-log'` -> `const log = require('electron-log')` 
-              isServe && notBundle(),
+              command === 'serve' && notBundle(),
             ],
           },
         },
@@ -66,15 +62,15 @@ export default defineConfig(({ command }) => {
           },
           vite: {
             build: {
-              sourcemap: sourcemap ? 'inline' : undefined, // #332
-              minify: isBuild,
+              sourcemap: command === 'serve' ? 'inline' : undefined, // #332
+              minify: command === 'build',
               outDir: 'dist-electron/preload',
               rollupOptions: {
                 external: Object.keys('dependencies' in pkg ? pkg.dependencies : {}),
               },
             },
             plugins: [
-              isServe && notBundle(),
+              command === 'serve' && notBundle(),
             ],
           },
         }
@@ -82,7 +78,7 @@ export default defineConfig(({ command }) => {
       // Use Node.js API in the Renderer process
       renderer(),
     ],
-    server: process.env.VSCODE_DEBUG && (() => {
+    server: (() => {
       const url = new URL(pkg.debug.env.VITE_DEV_SERVER_URL)
       return {
         host: url.hostname,
