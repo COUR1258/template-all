@@ -13,6 +13,13 @@
     "dist",
     "dist-electron"
   ],
+  "extraFiles": [
+    {
+      "from": "utils",
+      "to": ".",
+      "filter": ["*.ts"]
+    }
+  ],
   "mac": {
     "target": [
       "dmg"

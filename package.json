@@ -1,7 +1,7 @@
 {
   "name": "template-vite-vue",
   "version": "1.0.0",
-  "main": "dist-electron/main/index.js",
+  "main": "dist-electron/index.js",
   "description": "模板项目",
   "author": "cour",
   "private": true,
