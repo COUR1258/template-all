@@ -1,13 +1,20 @@
 // 主窗口创建
-import {BrowserWindow} from "electron";
+import {BrowserWindow, Tray} from "electron";
+import {resolve} from "node:path";
 import {windowsManager, urlLoadSync, urlLoadFileSync} from "./windows-manager";
 import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions;
+
+
+const iconPath = resolve(__dirname, '../ele.png')
+console.log(iconPath)
+// const appIcon = new Tray(iconPath)
 
 // 窗口创建
 export function mainWindowsInit(url:string,indexHtml:string,preload:string) {
     const options: BrowserWindowConstructorOptions = {
         title: '装窗口',
         show: false,
+        icon:iconPath,
         webPreferences: {
             preload
         }
