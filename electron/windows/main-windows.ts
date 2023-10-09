@@ -5,7 +5,7 @@ import {windowsManager, urlLoadSync, urlLoadFileSync} from "./windows-manager";
 import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions;
 
 
-const iconPath = resolve(__dirname, '../ele.png')
+const iconPath = resolve(__dirname, '../dist/assets/ele.png')
 console.log(iconPath)
 // const appIcon = new Tray(iconPath)
 

@@ -42,7 +42,7 @@ app.whenReady().then(()=>{
   console.log('窗口加载')
   win = mainWindowsInit(url,indexHtml,preload)
   console.log('窗口加载完成')
-  coreStart(win)
+  coreStart()
 })
 
 
