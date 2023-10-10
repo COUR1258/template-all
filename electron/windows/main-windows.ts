@@ -14,6 +14,7 @@ export function mainWindowsInit(url:string,indexHtml:string,preload:string) {
     const options: BrowserWindowConstructorOptions = {
         title: '装窗口',
         show: false,
+        frame:false,
         icon:iconPath,
         webPreferences: {
             preload
@@ -28,13 +29,7 @@ export function mainWindowsInit(url:string,indexHtml:string,preload:string) {
     return win;
 }
 
-// 窗口最小化
 
-
-// 窗口最大化
-
-
-// 窗口关闭
 
 
 

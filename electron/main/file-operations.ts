@@ -12,7 +12,7 @@ let folderAllProperties = ['openDirectory', 'multiSelections']
 export function openFileOne(): Promise<object> {
     return dialog.showOpenDialog({
         title: '选择文件',
-        properties: fileProperties
+        properties: fileProperties as any
     })
 }
 
@@ -22,7 +22,7 @@ export function openFileOne(): Promise<object> {
 export function openFileAll(): Promise<object> {
     return dialog.showOpenDialog({
         title: '选择多文件',
-        properties: fileAllProperties
+        properties: fileAllProperties as any
     })
 }
 
@@ -32,7 +32,7 @@ export function openFileAll(): Promise<object> {
 export function openFileOneSync(): string[] | undefined {
     return dialog.showOpenDialogSync({
         title: '选择多文件',
-        properties: fileProperties
+        properties: fileProperties as any
     })
 }
 
@@ -42,7 +42,7 @@ export function openFileOneSync(): string[] | undefined {
 export function openFileAllSync(): string[] | undefined {
     return dialog.showOpenDialogSync({
         title: '选择多文件',
-        properties: fileAllProperties
+        properties: fileAllProperties as any
     })
 }
 
@@ -53,7 +53,7 @@ export function openFileAllSync(): string[] | undefined {
 export function openFolderOne(): Promise<object> {
     return dialog.showOpenDialog({
         title: '选择文件夹',
-        properties: folderProperties
+        properties: folderProperties as any
     })
 }
 
@@ -63,7 +63,7 @@ export function openFolderOne(): Promise<object> {
 export function openFolderAll(): Promise<object> {
     return dialog.showOpenDialog({
         title: '选择文件夹',
-        properties: folderAllProperties
+        properties: folderAllProperties as any
     })
 }
 
@@ -73,7 +73,7 @@ export function openFolderAll(): Promise<object> {
 export function openFolderOneSync(): string[] | undefined {
     return dialog.showOpenDialogSync({
         title: '选择文件夹',
-        properties: folderProperties
+        properties: folderProperties as any
     })
 }
 
@@ -83,7 +83,7 @@ export function openFolderOneSync(): string[] | undefined {
 export function openFolderAllSync(): string[] | undefined {
     return dialog.showOpenDialogSync({
         title: '选择文件夹',
-        properties: folderAllProperties
+        properties: folderAllProperties as any
     })
 }
 
@@ -100,7 +100,7 @@ export function saveFile(): Promise<object> {
 /**
  * @description:同步保存
  */
-export function saveFileSync(): Promise<object> {
+export function saveFileSync(): (string) | (undefined) {
     return dialog.showSaveDialogSync({
         title: '保存',
     })

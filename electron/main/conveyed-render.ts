@@ -2,7 +2,6 @@
 interface RenderIF{
     [propname:string]:{
         on:()=>any
-        send:()=>any
     }
 }
 
@@ -11,11 +10,8 @@ interface RenderIF{
 
 
 // 渲染进程接收
-
-
 export const communicationRenderList:RenderIF = {
     'name':{
         on:()=>{},
-        send:()=>{},
     }
 }

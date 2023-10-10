@@ -3,14 +3,23 @@ import {ipcRenderer} from "electron";
 import {communicationRenderList} from "../main/conveyed-render";
 
 
-// 读取渲染进程通信配置
+
+/** 通讯相关---------------------------------------------------------------------------------------------*/
+// 通信处理绑定
 function registerCommunicationRender(communicationRenderList){
     Object.keys(communicationRenderList).forEach(key=>{
         console.log(ipcRenderer)
         ipcRenderer.on(key,communicationRenderList[key].on)
-        // ipcRenderer.send(key,communicationRenderList[key].send)
     })
 }
 
 // 注册通信
 registerCommunicationRender(communicationRenderList)
+
+
+let a = 10;
+window['isMainFrame'] = process.isMainFrame
+console.log(window['isMainFrame'])
+
+
+

@@ -15,11 +15,8 @@ function registerKey(keyList){
 function registerCommunicationMain(communicationMainList){
     Object.keys(communicationMainList).forEach(key=>{
         ipcMain.on(key,communicationMainList[key].on)
-        // ipcMain.handle(key,communicationMainList[key].handle)
     })
 }
-
-
 
 
 export function coreStart() {
