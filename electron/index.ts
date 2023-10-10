@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { app, BrowserWindow, shell, ipcMain ,session} from 'electron'
 import {mainWindowsInit} from "./windows/main-windows";
 import {coreStart} from "./core/core";
 import { join } from 'node:path'
@@ -37,11 +37,17 @@ const preload = join(__dirname, './preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL
 const indexHtml = join(process.env.DIST, 'index.html')
 
+// 扩展目录
+const extendPath = join(__dirname, '../extend/vue-devtools')
+
 // 默认操作
 app.whenReady().then(()=>{
   console.log('窗口加载')
   win = mainWindowsInit(url,indexHtml,preload)
   console.log('窗口加载完成')
+  session.defaultSession.loadExtension(extendPath).then(({ id }) => {
+    console.log('扩展程序', id)
+  })
   coreStart()
 })
 

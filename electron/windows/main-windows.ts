@@ -17,6 +17,8 @@ export function mainWindowsInit(url:string,indexHtml:string,preload:string) {
         frame:false,
         icon:iconPath,
         webPreferences: {
+            //关闭web权限检查，允许跨域
+            webSecurity: false,
             preload
         }
     };
