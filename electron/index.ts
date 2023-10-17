@@ -1,10 +1,6 @@
-import { app, BrowserWindow, shell, ipcMain ,session} from 'electron'
-import {mainWindowsInit} from "./windows/main-windows";
-import {coreStart} from "./core/core";
+import {release} from 'node:os'
 import { join } from 'node:path'
-import { release } from 'node:os'
-
-
+import {app} from "electron";
 
 // 获取electron所在目录
 process.env.DIST_ELECTRON = join(__dirname, '../..')
@@ -15,6 +11,7 @@ process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL
     ? join(process.env.DIST_ELECTRON, '../../public')
     : process.env.DIST
 
+// 初始化程序
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration()
 
@@ -23,74 +20,14 @@ if (process.platform === 'win32') app.setAppUserModelId(app.getName())
 
 // 检查应用程式是否已经启动
 if (!app.requestSingleInstanceLock()) {
-  app.quit()
-  process.exit(0)
+    app.quit()
+    process.exit(0)
 }
 
-// 主窗口全局变量
-let win: BrowserWindow | null = null
+// 主窗口的初始化
+(async () => {
+    await import('./windows/main-windows')
+    await import('./core/core')
+})()
 
-
-
-// 预加载处理
-const preload = join(__dirname, './preload/index.js')
-const url = process.env.VITE_DEV_SERVER_URL
-const indexHtml = join(process.env.DIST, 'index.html')
-
-// 扩展目录
-const extendPath = join(__dirname, '../extend/vue-devtools')
-
-// 默认操作
-app.whenReady().then(()=>{
-  console.log('窗口加载')
-  win = mainWindowsInit(url,indexHtml,preload)
-  console.log('窗口加载完成')
-  session.defaultSession.loadExtension(extendPath).then(({ id }) => {
-    console.log('扩展程序', id)
-  })
-  coreStart()
-})
-
-
-// 默认钩子触发
-
-
-// 快捷键注入
-
-
-// 通讯挂载
-
-
-// 自定义注入触发
-
-
-
-
-
-// 当全部窗口都被关闭时
-app.on('window-all-closed', () => {
-  win = null
-  if (process.platform !== 'darwin') app.quit()
-})
-
-// 当用户打开第二个窗口时
-app.on('second-instance', () => {
-  if (win) {
-    if (win.isMinimized()) win.restore()
-    win.focus()
-  }
-})
-
-// 应用被激活 macos独有
-app.on('activate', () => {
-  const allWindows = BrowserWindow.getAllWindows()
-  if (allWindows.length) {
-    allWindows[0].focus()
-  } else {
-    mainWindowsInit(url,indexHtml,preload)
-  }
-})
-
-
-// 测试
 

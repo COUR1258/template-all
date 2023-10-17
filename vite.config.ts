@@ -16,7 +16,16 @@ export default defineConfig(({ command ,mode}) => {
   return {
     resolve: {
       alias: {
-        '@': path.join(__dirname,"src")
+        '@': path.join(__dirname, "src")
+      }
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          // 两种方式都可以
+          additionalData: '@import "@/assets/scss/global.scss";'
+          // additionalData: '@use "@/assets/scss/global.scss" as *;'
+        }
       }
     },
     plugins: [

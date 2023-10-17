@@ -1,7 +1,5 @@
 /// <reference types="vite-plugin-electron/electron-env" />
 
-import {communicationList} from "./main/conveyed-main";
-
 declare namespace NodeJS {
   interface ProcessEnv {
     VSCODE_DEBUG?: 'true'

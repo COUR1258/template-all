@@ -14,7 +14,7 @@ import NavBar from "@/layout/components/NavBar.vue";
 .container {
   width: 100vw;
   height: 100vh;
-  background: #2c3e50;
+  background-color: var(--bg-color-02);
 }
 .container nav {
   width: 100vw;

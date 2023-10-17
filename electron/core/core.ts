@@ -1,30 +1,28 @@
-import {app, globalShortcut, ipcMain, ipcRenderer} from "electron";
+import appConfig from "../conf/app.config";
 import {keyList} from "../main/shortcuts-key";
+import {app, globalShortcut, ipcMain} from "electron";
+import {register_crt} from "../main/extension-register";
 import {communicationMainList} from "../main/conveyed-main";
 
 
+// 加载配置
+let appConfigAll = appConfig()
 
-// 读取快捷键配置
-function registerKey(keyList){
-    Object.keys(keyList).forEach(key=>{
+// 等待程序加载完成
+app.whenReady().then(() => {
+    // 读取快捷键配置
+    Object.keys(keyList).forEach(key => {
         globalShortcut.register(key, keyList[key])
     })
-}
-
-// 读取主进程通信配置
-function registerCommunicationMain(communicationMainList){
-    Object.keys(communicationMainList).forEach(key=>{
-        ipcMain.on(key,communicationMainList[key].on)
+    // 读取主进程通信配置
+    Object.keys(communicationMainList).forEach(key => {
+        ipcMain.on(key, communicationMainList[key].on)
     })
-}
+    // 添加扩展程序
+    register_crt(appConfigAll.extendPath)
+})
 
 
-export function coreStart() {
-    // 快捷键注册
-    registerKey(keyList)
-    // 通信绑定
-    registerCommunicationMain(communicationMainList)
-}
 
 
 
